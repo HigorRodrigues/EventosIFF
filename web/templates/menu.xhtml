@@ -1,0 +1,25 @@
+  
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"  
+    xmlns:h = "http://java.sun.com/jsf/html"
+    xmlns:ui = "http://java.sun.com/jsf/facelets"
+        
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+        <div class="w3-sidebar w3-bar-block w3-black" style="width:20%">
+            <div class="w3-container w3-dark-gray">
+                <h4>Eventos IFF</h4>
+            </div>
+            <h:form>
+                <h:graphicImage height="40%" name="imagens/logo_iff.jpg" style="margin: 5%" width="90%" />
+
+                <h:link class="glyphicon glyphicon-home w3-bar-item w3-button" value=" HOME" outcome="/index" /><i class = "fa fa-home"></i>
+
+                <h:link class="glyphicon glyphicon-file w3-bar-item w3-button" value=" Certificado" outcome="certificado" />
+                <h:link class="w3-bar-item w3-button glyphicon glyphicon-user " value=" Cadastrar" outcome="cadastrarPessoa" />
+                <h:link class="glyphicon glyphicon-log-in w3-bar-item w3-button" rendered="#{!autenticadorBean.estado()}" value=" Entrar " outcome="login" />
+                <h:commandLink class="glyphicon glyphicon-log-out w3-bar-item w3-button" rendered="#{autenticadorBean.estado()}" value=" Sair " action="#{autenticadorBean.desautentica()}" />                  
+            </h:form>       
+        </div>        
+    
+</ui:composition>

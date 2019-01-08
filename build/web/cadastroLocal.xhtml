@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+        
+    <ui:composition template="template.xhtml">
+        <ui:define name="corpo">                    
+            <div style="margin: 0 5% 0 25%" class="w3-card-4">
+                <h:form>
+                    <div class="w3-container w3-black">
+                        <h2>Cadastro do Local</h2>
+                    </div>
+                    
+                    <div class="w3-container">
+                        <div class="addMargin">
+                            <h:outputLabel for="nome" value="Nome: "/>
+                            <h:inputText id="nome" value="#{localBean.nome}" style="width: 30%" class="w3-input w3-animate-input"/>
+                        </div>                    
+                        
+                        <div class="addMargin">
+                            <h:outputLabel for="tamanho" value="Tamanho do Local: " />                        
+                            <h:inputText style="width: 30%" class="w3-input w3-animate-input" id="tamanho" value="#{localBean.tamanho}" />                                                    
+                        </div>
+                        
+                        <hr class="removeMargin  w3-black" />
+                        
+                        <div class="w3-center">
+                            <h:commandButton value="Salvar" action="#{localBean.salvar()}" class="w3-btn w3-black addMargin" />
+                        </div>
+                        
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

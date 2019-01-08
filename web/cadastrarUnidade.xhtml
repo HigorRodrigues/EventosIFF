@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="template.xhtml">
+         
+        <ui:define name="corpo">
+            <div class="container panel-body">
+                <h:form id="unidade"  class="form-inline">
+                    <div class="form-group">
+                        
+                        <!--<h:outputLabel for="nome" value="Nome: "/>-->
+                        <h:inputText id="nome" value="#{unidadeBean.nome}" 
+                                     class="form-control">
+                        <f:passThroughAttribute name="placeholder" value="Nome" />
+                        </h:inputText>
+                    </div>
+                    
+                    <div class="form-group">
+                        <h:selectOneMenu value="#{unidadeBean.cidade}" class="form-control">
+                            <f:selectItem itemLabel="Escolha a Cidade"/>
+                            <f:selectItems value="#{unidadeBean.cidades}" />
+                        </h:selectOneMenu>              
+                    </div>
+                    
+                    <div class="form-group">
+                        <h:commandButton value="Salvar" class="btn btn-secondary btn-lg btn-block" action="#{unidadeBean.cadastrarUnidade()}" />
+                    </div>
+                </h:form>
+            </div>
+            
+            <div class="container">
+                <h2>Unidades cadastradas</h2>
+                <h:form>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="row">Unidade</th>
+                                <th scope="row">Cidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{unidadeBean.allUnidades()}" var="u">
+                                <tr>
+                                    <td><h:outputText value="#{u.nome}" /></td>
+                                    <td><h:outputText value="#{u.cidade}" /></td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

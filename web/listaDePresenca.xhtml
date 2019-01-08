@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+        
+    <ui:composition template="template.xhtml">
+        <ui:define name="corpo">
+            
+            <h:form id="presenca">
+                
+                <div style="margin: 0 5% 0 25%" class="w3-container">                   
+                    <h2 style="float: left">Lista de Presença</h2>                                
+                    
+                    <h:commandButton style="clear: right" class="w3-button w3-section w3-right w3-black" value="Encerrar Chamada" action="#{certificadoBean.salvar(participacaoBean.participantes)}" />
+                    <h:dataTable id="listaPresenca" value="#{participacaoBean.participantes}"
+                                 var="p" class="w3-table w3-striped w3-bordered"
+                                 style="margin-bottom: 5%">
+                        <h:column>
+                            <f:facet name="header">Nome Participante</f:facet>
+                                #{p.pessoa.nome}
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">Confirmação de Presença</f:facet>
+                            <div style="margin-left: 20%">
+                                <h:selectBooleanCheckbox class="w3-check" value="#{p.statusParticipacao}">
+                                    <f:ajax render="presenca" listener="#{participacaoBean.atualizar(p)}"/>
+                                </h:selectBooleanCheckbox>                                    
+                            </div>
+                        </h:column>
+                        <h:column>                            
+                            <f:facet name="header">Situação</f:facet>              
+                            <h:outputText class="w3-text-red w3-center" rendered="#{!p.statusParticipacao}" value="AUSENTE" />                            
+                            <h:outputText class="w3-text-green w3-center" rendered="#{p.statusParticipacao}" value="PRESENTE" />                            
+                        </h:column>
+                    </h:dataTable>                    
+                    <h:commandButton style="clear: right" class="w3-button w3-section w3-right w3-black" value="Encerrar Chamada" action="#{certificadoBean.salvar(participacaoBean.participantes)}" />
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    
+</html>
