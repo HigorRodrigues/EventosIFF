@@ -529,6 +529,10 @@ a{
     margin: 0;
 }
 
+.addMarginDireita{
+    margin-right: 1%;
+}
+
 .formatImage{
     margin: 0;
     width: 100%;

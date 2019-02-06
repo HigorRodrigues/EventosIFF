@@ -41,9 +41,10 @@ public class CertificadoBean implements Serializable{
 
     public void buscaCertificado(){        
         this.certificado = new CertificadoDAO().findByIdGerado(this.idCertificado);
-
+        
         try{
-            this.caminhoCertificado = new GeradorCertificado(this.certificado).gerarPdf();
+            new GeradorCertificado(this.certificado).gerarPdf();
+            /*
             if( !this.caminhoCertificado.equals("") ){
                 this.certificadoGerado = true;
             }
@@ -51,9 +52,11 @@ public class CertificadoBean implements Serializable{
                 this.certificadoGerado = false;
             }
         }
+        */
+        }
         catch( Exception e){
             e.printStackTrace();
-        }
+        }        
     }
 
     public String getIdCertificado() {

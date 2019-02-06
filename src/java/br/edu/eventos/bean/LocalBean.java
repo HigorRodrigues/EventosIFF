@@ -18,7 +18,7 @@ public class LocalBean {
         local.setNome(this.nome);
         local.setTamanho(this.tamanho);
         new LocalDAO().salvar(local);
-        return "/faces/index.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
     
     public List<Local> allLocais(){

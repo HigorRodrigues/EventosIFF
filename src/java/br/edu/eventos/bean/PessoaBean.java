@@ -33,7 +33,7 @@ public class PessoaBean implements Serializable{
         p.setSenha(senha);
         
         new PessoaDAO().salvar(p);
-        return "faces/index?faces-redirect=true";
+        return "/index?faces-redirect=true";
     }
     
     private void adicionaMensagem(Severity type, String mensagem){

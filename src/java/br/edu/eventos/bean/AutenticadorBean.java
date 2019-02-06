@@ -51,7 +51,7 @@ public class AutenticadorBean implements Serializable {
 			.getExternalContext()
 			.getFlash().setKeepMessages(true);
                 
-            return "/faces/index.xhtml?faces-redirect=true";
+            return "/index.xhtml?faces-redirect=true";
         }
         else{
             FacesMessage fm = new FacesMessage("Login ou senha inválidos");
@@ -63,7 +63,7 @@ public class AutenticadorBean implements Serializable {
 			.getExternalContext()
 			.getFlash().setKeepMessages(true);
                 
-            return "/faces/login.xhtml?faces-redirect=true";
+            return "/login.xhtml?faces-redirect=true";
         }
     }
     
@@ -73,7 +73,7 @@ public class AutenticadorBean implements Serializable {
         HttpSession session = (HttpSession) ec.getSession(false);
         session.removeAttribute("usuario");
        
-        return "/faces/login.xhtml?faces-redirect=true";
+        return "/login.xhtml?faces-redirect=true";
     }
     
     public void enviaSenha(){

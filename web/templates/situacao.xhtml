@@ -1,0 +1,28 @@
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"  
+    xmlns:h = "http://java.sun.com/jsf/html"
+    xmlns:ui = "http://java.sun.com/jsf/facelets"        
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+        
+    
+        <div style="margin: 0 5% 0 25%" class="w3-container">
+            <h:form>
+                <c:if test="#{!autenticadorBean.estado()}" var="a" >           
+                    <div class="w3-panel w3-border-left w3-pale-red w3-border-red">
+                        <p class="w3-padding-16">
+                            <h:outputText value="Usuário não logado!" />
+                        </p>
+                    </div>
+                </c:if>
+                    
+                <c:if test="#{autenticadorBean.estado()}" var="b" >
+                    <div class="w3-panel w3-border-left w3-pale-green w3-border-green">
+                        <p class="w3-padding-16">
+                            <h:outputText value="Usuário logado como " />
+                            <strong><h:outputText value="#{sessionScope.usuario.nome}!" /></strong>
+                        </p>
+                    </div>
+                </c:if>
+            </h:form>                             
+        </div>
+</ui:composition>

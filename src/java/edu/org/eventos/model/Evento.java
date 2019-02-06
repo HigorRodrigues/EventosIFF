@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 @Entity
@@ -22,8 +23,7 @@ public class Evento implements Serializable {
     private Long id;
     private String idGerado;
         
-    private String nome;
-    private String proponente;
+    private String nome;    
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dtInicio;
@@ -31,6 +31,10 @@ public class Evento implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dtFim;
    
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_dono_do_evento")
+    private Pessoa donoEvento;
+    
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="id_unidade")
     private Unidade unidade;                
@@ -59,13 +63,13 @@ public class Evento implements Serializable {
         this.nome = nome;
     }
 
-    public String getProponente() {
-        return proponente;
+    public Pessoa getDonoEvento() {
+        return donoEvento;
     }
 
-    public void setProponente(String proponente) {
-        this.proponente = proponente;
-    }    
+    public void setDonoEvento(Pessoa donoEvento) {
+        this.donoEvento = donoEvento;
+    }
 
     public Date getDtInicio() {
         return dtInicio;

@@ -15,34 +15,26 @@
                     <h2>Cadastro de Evento</h2>
                 </div>
                 
-                <div class="w3-container">
-                    
-                    <div id="search" style="width: 50%;" class="addMargin">
-                        
-                        <h:inputText value="#{eventoBean.dono}" class="w3-input" autocomplete="off" id="dono">
-                            <f:passThroughAttribute name="placeHolder" value="Dono do evento"/>
-                            <f:ajax event="keyup" listener="#{eventoBean.search()}" execute="@this" render="result-panel"/>
-                        </h:inputText>
-                        
-                        <h:panelGroup id="result-panel" layout="block">
-                            <ul class="w3-ul w3-hoverable">
-                                <ui:repeat var="p" value="#{eventoBean.resultadoPessoas}" >
-                                    <li>
-                                        <h:commandButton style="width: 100%" class="w3-button w3-left-align" value="#{p.getNome()}" >
-                                            <f:ajax event="mousedown" listener="#{eventoBean.clickDono(p)}" execute="@this" render="teste"/>
-                                        </h:commandButton>                                                                                                                                
-                                    </li>
-                                </ui:repeat>
-                            </ul>
-                            <h:outputText id="teste" value="#{eventoBean.dono1}"></h:outputText>
-                        </h:panelGroup>
-                        
-                    </div>
+                <div class="w3-container">                                       
                     
                     <div class="addMargin">
                         <h:outputLabel for="nome" value="Nome: "/>
                         <h:inputText id="nome" value="#{eventoBean.nome}" style="width: 30%" class="w3-input w3-animate-input"/>   
                     </div>                                                    
+                    
+                    
+                    <div class="addMargin" >
+                        <h:outputLabel for="dono" value="Dono do Evento: "/>
+                        <div class="w3-row removeMargin">                                                        
+                            
+                            <div class="w3-third">
+                                <h:selectOneMenu value="#{eventoBean.idDonoSelecionado}" class="w3-select" id="result-panel" >                            
+                                    <f:selectItem itemValue="" itemLabel="Lista de Pessoas" />                                        
+                                    <f:selectItems value="#{eventoBean.todasPessoas}" var="u" itemLabel="#{u.nome}" itemValue="#{u.id}" />                                                                            
+                                </h:selectOneMenu>
+                            </div>
+                        </div>                                                
+                    </div>
                     
                     <div class="addMargin">
                         <h:outputLabel for="unidade" value="Realização: "/>                    
@@ -98,7 +90,6 @@
                 </div>
             </h:form>
         </div>
-        </ui:define>
-        
+        </ui:define>        
     </ui:composition>
 </html>

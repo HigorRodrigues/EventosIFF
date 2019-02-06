@@ -9,7 +9,6 @@ import edu.org.eventos.model.Atividade;
 import edu.org.eventos.model.Evento;
 import edu.org.eventos.model.Local;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -59,7 +58,7 @@ public class AtividadeBean implements Serializable{
         System.out.println("Indo para o salvar");
         new AtividadeDAO().salvar(atividade);
         System.out.println("Saindo do salvar");
-        return "/faces/evento.xhtml?faces-redirect=true";
+        return "/evento.xhtml?faces-redirect=true";
     }
     
     public int numerosInscritosPorAtividade( Long idAtividade ){

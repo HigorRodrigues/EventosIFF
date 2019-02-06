@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,21 +40,18 @@ public class EventoBean implements Serializable{
     private Evento eventoSelecionado;
     private List<Evento> eventos;
     private List<Atividade> atividadePorEvento;        
-
-    private String dono = "";
-    private String dono1 = "";
-    private Pessoa donoSelecionado;
-    private List<Pessoa> todasPessoas;
-    private List<Pessoa> resultadoPessoas;
+     
+    private Long idDonoSelecionado;
+    private List<Pessoa> todasPessoas;    
     
     private Part image;
     
     @PostConstruct
     public void init(){
-        this.todasPessoas = new PessoaDAO().findAll();
-        this.resultadoPessoas = new ArrayList<Pessoa>();
+        this.todasPessoas = new PessoaDAO().findAll();        
     }
     
+    /*
     public void search(){
         this.resultadoPessoas.clear();
         for(Pessoa pessoa : this.todasPessoas){
@@ -65,11 +61,7 @@ public class EventoBean implements Serializable{
         if( this.dono.equals("") )
             this.resultadoPessoas = null;
     }
-    
-    public void clickDono(Pessoa p){
-        this.dono1 = "Higor";
-        this.resultadoPessoas = null;
-    }
+    */    
     
     private void doUpload(String nome){
         try{            
@@ -99,7 +91,7 @@ public class EventoBean implements Serializable{
         Calendar c = Calendar.getInstance();
         c.setTime(data);
         return "A" + c.get(Calendar.YEAR) + "E" + 
-            new LerArquivoSerie().retornaSerie("/home/higor/NetBeansProjects/eventosIFF/web/resources/geradores/geredoIdEvento.txt");
+            new LerArquivoSerie().retornaSerie("/home/higor/NetBeansProjects/eventosIFF/web/resources/geradores/geredorIdEvento.txt");
     }
     
     public String imagem(String nomeImagem){
@@ -118,12 +110,13 @@ public class EventoBean implements Serializable{
         }
         e.setNome(nome);
         e.setDtInicio(dtInicio);
-        e.setDtFim(dtFim);
+        e.setDtFim(dtFim);                        
+        e.setDonoEvento(new PessoaDAO().findById(idDonoSelecionado));
         
         this.unidade = new UnidadeDAO().findById(id_unidade);                                
         e.setUnidade(unidade);    
         new EventoDAO().salvar(e);               
-        return "faces/index.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
     
     public String prepararEdicao(Evento e){
@@ -132,7 +125,7 @@ public class EventoBean implements Serializable{
         this.setId_unidade(e.getUnidade().getId());
         this.setDtInicio(e.getDtInicio());
         this.setDtFim(e.getDtFim());
-        return "faces/eventoCadastro.xhtml?faces-redirect=true";
+        return "/eventoCadastro.xhtml?faces-redirect=true";
     }
     
     public String apagar(Long id){
@@ -145,7 +138,7 @@ public class EventoBean implements Serializable{
         else{
             this.adicionaMensagem(FacesMessage.SEVERITY_ERROR, "Houve um erro ao excluir evento!");
         }
-        return "faces/index.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
     
     public List<Evento> findAll(){
@@ -168,34 +161,20 @@ public class EventoBean implements Serializable{
 	FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);        
     }
 
-    public String getDono() {
-        return dono;
+    
+    public Long getIdDonoSelecionado() {    
+        return idDonoSelecionado;
     }
 
-    public void setDono(String dono) {
-        this.dono = dono;
+    //Início dos getters and setters
+    public void setIdDonoSelecionado(Long idDonoSelecionado) {
+        this.idDonoSelecionado = idDonoSelecionado;
     }
 
-    public List<Pessoa> getResultadoPessoas() {
-        return resultadoPessoas;
-    }
-
-    public void setResultadoPessoas(List<Pessoa> resultadoPessoas) {
-        this.resultadoPessoas = resultadoPessoas;
-    }
-        
     public Part getImage() {
         return image;
     }
-
-    public String getDono1() {
-        return dono1;
-    }
-
-    public void setDono1(String dono1) {
-        this.dono1 = dono1;
-    }        
-
+    
     public void setImage(Part image) {
         this.image = image;
     }
@@ -212,14 +191,6 @@ public class EventoBean implements Serializable{
         return atividadePorEvento;
     }
 
-    public Pessoa getDonoSelecionado() {
-        return donoSelecionado;
-    }
-
-    public void setDonoSelecionado(Pessoa donoSelecionado) {
-        this.donoSelecionado = donoSelecionado;
-    }
-        
     public void setAtividadePorEvento(List<Atividade> atividadePorEvento) {
         this.atividadePorEvento = atividadePorEvento;
     }
@@ -304,4 +275,12 @@ public class EventoBean implements Serializable{
         this.unidade = unidade;
     }
 
+    public List<Pessoa> getTodasPessoas() {
+        return todasPessoas;
+    }
+
+    public void setTodasPessoas(List<Pessoa> todasPessoas) {
+        this.todasPessoas = todasPessoas;
+    }
+    
 }

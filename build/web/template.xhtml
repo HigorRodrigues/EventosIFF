@@ -12,6 +12,7 @@
         <h:outputStylesheet name="css/bootstrap.min.css"/>
         <h:outputStylesheet name="css/w3.css"/>
         <h:outputScript name="js/mascaras.js"/>        
+        <h:outputScript name="js/Accordion.js"/>        
         <title>Eventos</title>                        
     </h:head>
     
@@ -20,14 +21,15 @@
             <ui:include src="templates/menu.xhtml" />
         </ui:insert>
         
+        <ui:insert name="situacaoUsuario">                
+            <ui:include src="templates/situacao.xhtml" />
+        </ui:insert>
+        
         <ui:insert name="corpo" />
             
         <ui:insert name="rodape">
             
         </ui:insert>
         
-        <script>
-
-</script>
     </h:body>
 </html>
