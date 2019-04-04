@@ -13,63 +13,68 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-@ManagedBean
+@Named
 @RequestScoped
 public class EventoBean implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
     private Long id;
-    private String nome, proponente;
+    private String nome, descricao;
     private Long id_unidade;
     private Unidade unidade;
 
-    private Date dtInicio, dtFim;
+    private String dtInicio, dtFim;
     private boolean certificadoUnico, temInscricao;
     private Evento eventoSelecionado;
     private List<Evento> eventos;
     private List<Atividade> atividadePorEvento;        
      
     private Long idDonoSelecionado;
-    private List<Pessoa> todasPessoas;    
+    private Long idAssinanteSelecionado;
     
-    private Part image;
+    private List<Pessoa> todasPessoas;
+    private List<Pessoa> pessoasPerfilSelecionado;
+    
+    private int quantCaracteres = 0;
+    
+    private Part imageLogo, imageBanner;
     
     @PostConstruct
-    public void init(){
-        this.todasPessoas = new PessoaDAO().findAll();        
+    public void init(){        
+        this.todasPessoas = new PessoaDAO().findAll();
+        this.pessoasPerfilSelecionado = new PessoaDAO().findByPerfil("Assinante");
     }
     
-    /*
-    public void search(){
-        this.resultadoPessoas.clear();
-        for(Pessoa pessoa : this.todasPessoas){
-            if( pessoa.getNome().toUpperCase().startsWith( dono.toUpperCase() ) )
-                this.resultadoPessoas.add(pessoa);
-        }
-        if( this.dono.equals("") )
-            this.resultadoPessoas = null;
-    }
-    */    
+    public int quantidadeCaracteres(){
+        int valor = 0;
+        if( descricao == null )
+            return valor;
+        for( int x = 0; x < descricao.length(); x++)
+            valor += 1;
+        return valor;
+    }    
     
-    private void doUpload(String nome){
+    private void doUpload(String nome, Part image){
         try{            
-            InputStream input = image.getInputStream();
+            InputStream input = image.getInputStream();            
             
             File file = new File("/home/higor/NetBeansProjects/eventosIFF/web/resources/imagens/" + nome + ".jpg");
             file.createNewFile();
-            
+                        
             FileOutputStream output = new FileOutputStream(file);
            
             byte[] buffer = new byte[1024];
@@ -94,27 +99,31 @@ public class EventoBean implements Serializable{
             new LerArquivoSerie().retornaSerie("/home/higor/NetBeansProjects/eventosIFF/web/resources/geradores/geredorIdEvento.txt");
     }
     
-    public String imagem(String nomeImagem){
-        return "imagens/" + nomeImagem + ".jpg";
+    public String imagem(String nomeImagem, String tipo){
+        return "imagens/" + tipo + "_" +nomeImagem + ".jpg";
     }
     
-    public String salvar(){
+    public String salvar() throws ParseException{
         Evento e = new Evento();        
+        SimpleDateFormat parser = new SimpleDateFormat("dd/MM/yyyy");
         
         if( this.getId() == null ){
-            e.setIdGerado(this.gerarIdEvento(dtInicio));
-            this.doUpload(e.getIdGerado());
+            e.setIdGerado(this.gerarIdEvento(parser.parse(dtInicio)));
+            this.doUpload("logo_" + e.getIdGerado(), this.imageLogo);
+            this.doUpload("banner_" + e.getIdGerado(), this.imageBanner);
         }
         else{
             e.setId(id);            
         }
-        e.setNome(nome);
-        e.setDtInicio(dtInicio);
-        e.setDtFim(dtFim);                        
-        e.setDonoEvento(new PessoaDAO().findById(idDonoSelecionado));
+        e.setNome(nome);        
+        e.setDtInicio(parser.parse(dtInicio));
+        e.setDtFim(parser.parse(dtFim)); 
+        e.setDescricao(descricao);
         
-        this.unidade = new UnidadeDAO().findById(id_unidade);                                
-        e.setUnidade(unidade);    
+        e.setDonoEvento(new PessoaDAO().findById(idDonoSelecionado));
+        e.setAssinante(new PessoaDAO().findById(idAssinanteSelecionado));
+        e.setUnidade(new UnidadeDAO().findById(id_unidade));                                
+        
         new EventoDAO().salvar(e);               
         return "/index.xhtml?faces-redirect=true";
     }
@@ -123,8 +132,8 @@ public class EventoBean implements Serializable{
         this.setId(e.getId());
         this.setNome(e.getNome());
         this.setId_unidade(e.getUnidade().getId());
-        this.setDtInicio(e.getDtInicio());
-        this.setDtFim(e.getDtFim());
+        //this.setDtInicio(e.getDtInicio());
+        //this.setDtFim(e.getDtFim());
         return "/eventoCadastro.xhtml?faces-redirect=true";
     }
     
@@ -171,13 +180,21 @@ public class EventoBean implements Serializable{
         this.idDonoSelecionado = idDonoSelecionado;
     }
 
-    public Part getImage() {
-        return image;
+    public Part getImageLogo() {
+        return imageLogo;
     }
-    
-    public void setImage(Part image) {
-        this.image = image;
+
+    public void setImageLogo(Part imageLogo) {
+        this.imageLogo = imageLogo;
     }
+
+    public Part getImageBanner() {
+        return imageBanner;
+    }
+
+    public void setImageBanner(Part imageBanner) {
+        this.imageBanner = imageBanner;
+    }   
     
     public Evento getEventoSelecionado() {
         return eventoSelecionado;
@@ -187,6 +204,14 @@ public class EventoBean implements Serializable{
         this.eventoSelecionado = eventoSelecionado;
     }
 
+    public List<Pessoa> getPessoasPerfilSelecionado() {
+        return pessoasPerfilSelecionado;
+    }
+
+    public void setPessoasPerfilSelecionado(List<Pessoa> pessoasPerfilSelecionado) {
+        this.pessoasPerfilSelecionado = pessoasPerfilSelecionado;
+    }
+    
     public List<Atividade> getAtividadePorEvento() {
         return atividadePorEvento;
     }
@@ -227,19 +252,19 @@ public class EventoBean implements Serializable{
         this.temInscricao = temInscricao;
     }
 
-    public Date getDtInicio() {
+    public String getDtInicio() {
         return dtInicio;
     }
 
-    public void setDtInicio(Date dtInicio) {
+    public void setDtInicio(String dtInicio) {
         this.dtInicio = dtInicio;
     }
 
-    public Date getDtFim() {
+    public String getDtFim() {
         return dtFim;
     }
 
-    public void setDtFim(Date dtFim) {
+    public void setDtFim(String dtFim) {
         this.dtFim = dtFim;
     }   
     
@@ -251,14 +276,14 @@ public class EventoBean implements Serializable{
         this.nome = nome;
     }
 
-    public String getProponente() {
-        return proponente;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setProponente(String proponente) {
-        this.proponente = proponente;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
-
+    
     public List<Evento> getEventos() {
         return eventos;
     }
@@ -282,5 +307,21 @@ public class EventoBean implements Serializable{
     public void setTodasPessoas(List<Pessoa> todasPessoas) {
         this.todasPessoas = todasPessoas;
     }
-    
+
+    public Long getIdAssinanteSelecionado() {
+        return idAssinanteSelecionado;
+    }
+
+    public void setIdAssinanteSelecionado(Long idAssinanteSelecionado) {
+        this.idAssinanteSelecionado = idAssinanteSelecionado;
+    }    
+
+    public int getQuantCaracteres() {
+        return quantCaracteres;
+    }
+
+    public void setQuantCaracteres(int quantCaracteres) {
+        this.quantCaracteres = quantCaracteres;
+    }
+        
 }

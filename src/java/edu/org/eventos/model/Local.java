@@ -2,12 +2,11 @@ package edu.org.eventos.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Local implements Serializable {
@@ -20,6 +19,10 @@ public class Local implements Serializable {
     private String nome;
     private int tamanho;
         
+    @OneToOne
+    @JoinColumn(name="id_unidade")
+    private Unidade unidade;
+    
     public Long getId() {
         return id;
     }
@@ -47,6 +50,14 @@ public class Local implements Serializable {
         return hash;
     }
 
+    public Unidade getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unidade unidade) {
+        this.unidade = unidade;
+    }
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

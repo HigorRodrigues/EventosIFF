@@ -41,3 +41,10 @@ function MascaraCPF(cpf){
     }		
     return formataCampo(cpf, '000.000.000-00', event);
 }             
+
+function MascaraTelefone(telefone){	
+    if(mascaraInteiro(telefone)===false){		
+        event.returnValue = false;	
+    }		
+    return formataCampo(telefone, '(00)00000-0000', event);
+}             

@@ -1,15 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+
+<html lang="pt-br"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui = "http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
-        
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+       
+    <h:head>
+        <title>Certificado::EventosIFF</title>
+    </h:head>
+    
     <ui:composition template="template.xhtml">            
+        
         <ui:define name="corpo">
-
             <div style="margin: 0 5% 0 25%" class="w3-container">                
                 <h:form>                                        
                     <h1 style="margin-top: 5%; padding: 2% 0 2% 0" class=" w3-center w3-container w3-black">
@@ -22,17 +26,11 @@
                             </h:inputText>                                                            
                         </div>
                         <div class="w3-half">                            
-                            <h:commandButton class="w3-btn w3-black" value="Buscar" action="#{participacaoBean.buscaCertificado()}">                                
-                            </h:commandButton>
+                            <h:commandButton class="w3-btn w3-black" value="Buscar" action="#{participacaoBean.buscaCertificado()}"/>
                         </div>
-                    </div>
-                              
-                    <div>
-                        
-                    </div>
+                    </div>                              
                 </h:form>
-            </div>            
-            
+            </div>                        
         </ui:define>
     </ui:composition>
 </html>

@@ -25,14 +25,20 @@ public class PessoaBean implements Serializable{
     
     public String salvar(){        
         Pessoa p = new Pessoa();
-        p.setPerfil("Participante");
+        if (perfil == null )
+            p.setPerfil("Participante");
+        else
+            p.setPerfil(perfil);
         p.setNome(nome);
         p.setEmail(email);
         p.setCpf(cpf);
         p.setInstituicao(instituicao);
         p.setSenha(senha);
         
-        new PessoaDAO().salvar(p);
+        if( new PessoaDAO().salvar(p) )
+            adicionaMensagem(FacesMessage.SEVERITY_INFO, "Cadastro realizado com sucesso");
+        else
+            adicionaMensagem(FacesMessage.SEVERITY_ERROR, "Cadastro realizado com sucesso");
         return "/index?faces-redirect=true";
     }
     

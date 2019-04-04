@@ -1,10 +1,16 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html lang="pt-br"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui = "http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
-        
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Cadastrar Local::EventosIFF</title>
+    </h:head>
+    
     <ui:composition template="template.xhtml">
         <ui:define name="corpo">                    
             <div style="margin: 0 5% 0 25%" class="w3-card-4">
@@ -12,24 +18,68 @@
                     <div class="w3-container w3-black">
                         <h2>Cadastro do Local</h2>
                     </div>
-                    
-                    <div class="w3-container">
-                        <div class="addMargin">
+                    <div class="w3-row-padding addMargin">
+                        <div class="w3-third">
                             <h:outputLabel for="nome" value="Nome: "/>
-                            <h:inputText id="nome" value="#{localBean.nome}" style="width: 30%" class="w3-input w3-animate-input"/>
-                        </div>                    
-                        
-                        <div class="addMargin">
+                            <h:inputText id="nome" value="#{localBean.nome}" class="w3-input"/>        
+                        </div>
+                        <div class="w3-third">
                             <h:outputLabel for="tamanho" value="Tamanho do Local: " />                        
-                            <h:inputText style="width: 30%" class="w3-input w3-animate-input" id="tamanho" value="#{localBean.tamanho}" />                                                    
+                            <h:inputText class="w3-input" id="tamanho" value="#{localBean.tamanho}" />                                                    
                         </div>
-                        
-                        <hr class="removeMargin  w3-black" />
-                        
-                        <div class="w3-center">
-                            <h:commandButton value="Salvar" action="#{localBean.salvar()}" class="w3-btn w3-black addMargin" />
+                        <div class="w3-third ">
+                            <h:outputLabel for="unidade" value="Unidade: "/>
+                            <h:selectOneMenu value="#{localBean.id_unidade}" class="w3-select">
+                                <f:selectItem itemValue="" itemLabel="Escolha uma Unidade" />
+                                <f:selectItems value="#{unidadeBean.allUnidades()}" var="u" itemLabel="#{u.nome}" itemValue="#{u.id}" />
+                            </h:selectOneMenu>                            
                         </div>
-                        
+                    </div>
+                    
+                    <div class="w3-center addMargin">
+                        <h:commandButton value="Salvar" action="#{localBean.salvar()}" class="w3-btn w3-black">
+                            
+                        </h:commandButton>                        
+                    </div>                                                                            
+
+                    <hr class="removeMargin  w3-black" />                                                                                                                                       
+                
+                    <div class="w3-container addMargin w3-padding">
+                        <h:dataTable class="w3-table-all" headerClass="w3-black" id="listaLocais" value="#{localBean.allLocais()}" var="l" title="Lista de locais cadastrados">
+                            <h:column>
+                                <f:facet class="" name="header">
+                                    <h:outputText value="Local"/>
+                                </f:facet>
+                                <h:outputText value="#{l.nome}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet class="w3-black" name="header">
+                                    <h:outputText value="Lotação"/>
+                                </f:facet>
+                                <h:outputText value="#{l.tamanho}">
+                                    <f:convertNumber type="number" integerOnly="true" />
+                                </h:outputText>
+
+                            </h:column >
+
+                            <h:column>
+                                <f:facet class="w3-black" name="header">
+                                    <h:outputText value="Unidade"/>
+                                </f:facet>
+                                <h:outputText value="#{l.unidade.nome}"/>
+                            </h:column>
+                            
+                            <h:column rendered="#{regrasBean.verificaAdministrador()}">
+                                <f:facet class="w3-black" name="header">
+                                    <h:outputText value="Ações"/>
+                                </f:facet>
+                                <h:commandButton title="Apagar" class="glyphicon glyphicon-apple" action="#{localBean.apagar(l.id)}">
+                                    <f:ajax render="@all"/>
+                                </h:commandButton>
+                            </h:column>
+                            
+                        </h:dataTable>
                     </div>
                 </h:form>
             </div>

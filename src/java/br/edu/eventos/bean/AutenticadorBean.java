@@ -73,7 +73,7 @@ public class AutenticadorBean implements Serializable {
         HttpSession session = (HttpSession) ec.getSession(false);
         session.removeAttribute("usuario");
        
-        return "/login.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
     
     public void enviaSenha(){

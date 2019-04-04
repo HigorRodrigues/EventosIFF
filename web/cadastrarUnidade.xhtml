@@ -1,60 +1,62 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+
+<html lang="pt-br"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui = "http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
-    <ui:composition template="template.xhtml">
-         
+    <h:head>
+        <title>Cadastro Atividade::EventosIFF</title>
+    </h:head>
+    
+    <ui:composition template="template.xhtml">         
         <ui:define name="corpo">
-            <div class="container panel-body">
-                <h:form id="unidade"  class="form-inline">
-                    <div class="form-group">
-                        
-                        <!--<h:outputLabel for="nome" value="Nome: "/>-->
-                        <h:inputText id="nome" value="#{unidadeBean.nome}" 
-                                     class="form-control">
-                        <f:passThroughAttribute name="placeholder" value="Nome" />
-                        </h:inputText>
-                    </div>
-                    
-                    <div class="form-group">
-                        <h:selectOneMenu value="#{unidadeBean.cidade}" class="form-control">
-                            <f:selectItem itemLabel="Escolha a Cidade"/>
-                            <f:selectItems value="#{unidadeBean.cidades}" />
-                        </h:selectOneMenu>              
-                    </div>
-                    
-                    <div class="form-group">
-                        <h:commandButton value="Salvar" class="btn btn-secondary btn-lg btn-block" action="#{unidadeBean.cadastrarUnidade()}" />
-                    </div>
-                </h:form>
-            </div>
-            
-            <div class="container">
-                <h2>Unidades cadastradas</h2>
+            <div style="margin: 0 5% 0 25%" class="w3-card-4">
                 <h:form>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="row">Unidade</th>
-                                <th scope="row">Cidade</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ui:repeat value="#{unidadeBean.allUnidades()}" var="u">
-                                <tr>
-                                    <td><h:outputText value="#{u.nome}" /></td>
-                                    <td><h:outputText value="#{u.cidade}" /></td>
-                                </tr>
-                            </ui:repeat>
-                        </tbody>
-                    </table>
+                    <div class="w3-container w3-black">
+                        <h2>Cadastro de Unidade</h2>
+                    </div>
+                    <div class="w3-row-padding addMargin">
+                        <div class="w3-half">
+                            <h:outputLabel for="nome" value="Nome: "/>
+                            <h:inputText id="nome" value="#{unidadeBean.nome}" class="w3-input"/>        
+                        </div>                        
+                        <div class="w3-half ">
+                            <h:outputLabel for="cidade" value="Cidade: "/>
+                            <h:selectOneMenu value="#{unidadeBean.cidade}" class="w3-select">
+                                <f:selectItem itemLabel="Escolha a Cidade"/>
+                                <f:selectItems value="#{unidadeBean.cidades}" />
+                            </h:selectOneMenu>                            
+                        </div>
+                    </div>            
+                    <div class="w3-center addMargin">
+                        <h:commandButton value="Salvar" action="#{unidadeBean.cadastrarUnidade()}" class="w3-btn w3-black" />                                                 
+                    </div>                                                                                                
+                    
+                    <hr class="removeMargin  w3-black" />                                                                                                                                       
+                
+                    <div class="w3-container addMargin w3-padding">
+                        <h:dataTable class="w3-table-all" headerClass="w3-black" id="listaUnidades" value="#{unidadeBean.allUnidades()}" var="u" title="Lista de Unidades cadastradas">
+                            <h:column>
+                                <f:facet class="" name="header">
+                                    <h:outputText value="Unidade"/>
+                                </f:facet>
+                                <h:outputText value="#{u.nome}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet class="w3-black" name="header">
+                                    <h:outputText value="Cidade"/>
+                                </f:facet>
+                                <h:outputText value="#{u.cidade}"/>                                                                    
+
+                            </h:column >
+                        </h:dataTable>
+                    </div>
                 </h:form>
-            </div>
+            </div>                                                                                                                                                                                                                                                
         </ui:define>
     </ui:composition>
 </html>

@@ -19,14 +19,35 @@ public class LocalDAO {
             em.getTransaction().begin();
             em.persist(l);
             em.getTransaction().commit();
+            resultado = true;
         }
         catch( Exception e ){
             em.getTransaction().rollback();
         }
         finally{
             em.close();
-        }
+        }        
+        return resultado;
+    }
+    
+    public boolean apagar( Long id ){
+        boolean resultado = false;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaJPAPU");
+        EntityManager em = emf.createEntityManager();
         
+        try{
+            em.getTransaction().begin();
+            Local local = em.find(Local.class, id);
+            em.remove(local);
+            em.getTransaction().commit();
+            resultado = true;
+        }
+        catch( Exception e ){
+            em.getTransaction().rollback();
+        }
+        finally{
+            em.close();
+        }        
         return resultado;
     }
     

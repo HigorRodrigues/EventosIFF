@@ -1,98 +1,105 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+
+<html lang="pt-br"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui = "http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <h:head>
+        <title>Evento::EventosIFF</title>
+    </h:head>
         
-        <ui:composition template="template.xhtml">
+    <ui:composition template="template.xhtml">
             
-            <ui:define name="corpo">
-             <div  style="margin: 0 5% 0 25%" class="w3-container">                                
-                 <div class="w3-container">                     
-                     <h:graphicImage style="width:100%; height: 200px" class="w3-round addMargin" name="#{eventoBean.imagem(sessionScope.evento.idGerado)}" alt="Logo do Evento"/>                    
-                </div>
-                
-                <div class="w3-container">                   
-                    <h2>Atividades</h2>                                
-                    
-                    <h:form>
-                        <c:forEach var="a" items="#{atividadeBean.atividadesByEvento(sessionScope.evento.id)}">
-                            <div class="w3-card-4 addMargin">
-                                <header class="w3-container w3-light-grey">
-                                    <h3><h:outputText value="#{a.nome}" /></h3>
-                                </header>
-                                
-                                <div class="w3-container">
-                                    <p>
-                                        <strong>Local: </strong>
-                                        <h:outputText value="#{a.local.nome}" />                                            
-                                    </p>
-                                    <hr class="removeMargin"/>
-                                    
-                                    <p>
-                                        <strong>Data Início: </strong>
-                                        <h:outputText value="#{a.dtInicio}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                                        </h:outputText>
-                                    </p>
-                                    <hr class="removeMargin"/>
-                                    <p>
-                                        <strong>Data Fim: </strong>
-                                        <h:outputText value="#{a.dtFim}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                                        </h:outputText>
-                                    </p>
-                                    <hr class="removeMargin" />
-                                    
-                                    <p>
-                                        <strong>Horário de Início: </strong>
-                                        <h:outputText value="#{a.horaInicio}">
-                                            <f:convertDateTime pattern="HH:mm" />
-                                        </h:outputText>
-                                    </p>
-                                    <hr class="removeMargin" />
-                                    
-                                    <p>
-                                        <strong>Carga horária: </strong>                                        
-                                        <h:outputText value="#{a.carga_horaria}" />
-                                    </p>
-                                    <hr class="removeMargin" />
-                                    
-                                    <p style="display: inline">  
-                                        <strong>Lotação: </strong>
-                                        <div class="w3-light-grey">                                        
-                                            <div class="w3-grey w3-center" style="height:24px;width:#{atividadeBean.numerosInscritosPorAtividade(a.id)}%">
-                                                #{atividadeBean.numerosInscritosPorAtividade(a.id)}
-                                            </div>                                        
-                                        </div>
-                                    </p>
-                                    <hr class="removeMargin" />
-                                    
-                                    <div class="w3-center addMargin">
-                                        <h:commandButton value="Inscrever" 
-                                                         class="w3-btn w3-black w3-margin-right" rendered="#{(autenticadorBean.estado()) and (!participacaoBean.verificaParticipacao(sessionScope.usuario.getId(), a.id))}" 
-                                                         action="#{participacaoBean.salvar(a.id, sessionScope.usuario.getId())}">
-                                            <f:ajax render="@form"/>
-                                        </h:commandButton>                                                                                
-                                        <h:commandLink value="Lista de Presença" action="#{participacaoBean.coletarParticipantes(a.id)}"/>
-                                    </div>                                    
-                                </div>
+        <ui:define name="corpo">
+         <div  style="margin: 0 5% 0 25%" class="w3-container">                                
+             <div class="w3-container">                     
+                 <h:graphicImage style="width:100%; height: 200px" class="w3-round addMargin" name="#{eventoBean.imagem(sessionScope.evento.idGerado, 'banner')}" alt="Logo do Evento #{sessionScope.evento.nome}"/>                    
+            </div>
+
+            <div class="w3-container">                   
+                <h2>Atividades</h2>                                
+
+                <h:form>
+                    <c:forEach var="a" items="#{atividadeBean.atividadesByEvento(sessionScope.evento.id)}">
+                        <div class="w3-card-4 addMargin">
+                            <header class="w3-container w3-light-grey">
+                                <h3><strong><span class="w3-black w3-padding" style="font-size: 16px;"><h:outputText value="Palestra"/></span></strong>
+                                        <h:outputText value=" #{a.nome}" /></h3>
+                            </header>
+
+                            <div class="w3-container">
+                                <p>
+                                    <strong>Local: </strong>
+                                    <h:outputText value="#{a.local.nome}" />                                            
+                                </p>
+                                <hr class="removeMargin"/>
+
+                                <p>
+                                    <strong>Data Início: </strong>
+                                    <h:outputText value="#{a.dtInicio}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p>
+                                <hr class="removeMargin"/>
+                                <p>
+                                    <strong>Data Fim: </strong>
+                                    <h:outputText value="#{a.dtFim}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p>
+                                <hr class="removeMargin" />
+
+                                <p>
+                                    <strong>Horário de Início: </strong>
+                                    <h:outputText value="#{a.horaInicio}">
+                                        <f:convertDateTime pattern="HH:mm" />
+                                    </h:outputText>
+                                </p>
+                                <hr class="removeMargin" />
+
+                                <p>
+                                    <strong>Carga horária: </strong>                                        
+                                    <h:outputText value="#{a.carga_horaria}" />
+                                </p>
+                                <hr class="removeMargin" />
+
+                                <p style="display: inline">  
+                                    <strong>Lotação: </strong>
+                                    <div class="w3-light-grey">                                        
+                                        <div class="w3-grey w3-center" style="height:24px;width:#{atividadeBean.numerosInscritosPorAtividade(a.id)}%">
+                                            #{atividadeBean.numerosInscritosPorAtividade(a.id)}%
+                                        </div>                                        
+                                    </div>
+                                </p>
+                                <hr class="removeMargin" />
+
+                                <div class="w3-center addMargin">
+                                    <h:commandButton value="Inscrever" 
+                                                     class="w3-btn w3-black w3-margin-right" rendered="#{(autenticadorBean.estado()) and (!participacaoBean.verificaParticipacao(sessionScope.usuario.getId(), a.id))}" 
+                                                     action="#{participacaoBean.salvar(a.id, sessionScope.usuario.getId())}">
+                                        <f:ajax render="@form"/>
+                                    </h:commandButton>                                                                                
+                                    <h:commandLink value="Lista de Presença" action="#{participacaoBean.coletarParticipantes(a.id)}" rendered="#{regrasBean.isAdministradorOuDono(sessionScope.evento)}"/>
+                                </div>                                    
                             </div>
-                        </c:forEach>
-                    </h:form>                                        
-                </div>                                                                                                                                                                                                        
-                <div class="w3-container">
-                    <h:form>
-                        <h:outputLink rendered="#{autenticadorBean.estado()}" class="w3-btn w3-black" value="atividade.xhtml">
-                            <h:outputText value="Cadastrar Atividade" />
-                            <f:param name="evento" value="#{sessionScope.evento.id}" />
-                        </h:outputLink>
-                    </h:form>
-                </div>
-             </div>
-            </ui:define>
-        </ui:composition>
+                        </div>
+                    </c:forEach>
+                </h:form>                                        
+            </div>                                                                                                                                                                                                        
+            <div class="w3-container">
+                <h:form>
+                    <h:outputLink rendered="#{autenticadorBean.estado()}" class="w3-btn w3-black" value="atividade.xhtml">
+                        <h:outputText value="Cadastrar Atividade" />
+                        <f:param name="evento" value="#{sessionScope.evento.id}" />
+                    </h:outputLink>
+                </h:form>
+            </div>
+         </div>
+        </ui:define>
+    </ui:composition>
     
 </html>

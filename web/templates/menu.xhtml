@@ -1,37 +1,39 @@
-  
+<!DOCTYPE html>  
 <ui:composition xmlns = "http://www.w3.org/1999/xhtml"  
     xmlns:h = "http://java.sun.com/jsf/html"
     xmlns:ui = "http://java.sun.com/jsf/facelets"        
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:f="http://xmlns.jcp.org/jsf/core">
     
-        <div class="w3-sidebar w3-bar-block w3-black" style="width:20%">
-            <div class="w3-container w3-dark-gray">
-                <h4>Eventos Institucionais</h4>
+    <div class="w3-sidebar w3-bar-block w3-black" style="width:20%">
+        <div class="w3-container w3-dark-gray">
+            <h1 class="w3-xlarge">EventosIFF</h1>
+        </div>
+        <h:form>
+            <div class="w3-center">
+                <h:graphicImage alt="Logo do Instituto Federal Fluminense" height="200px" name="imagens/logo_iff.jpg" style="margin: 5%" width="150px" />
             </div>
-            <h:form>
-                <h:graphicImage height="40%" name="imagens/logo_iff.jpg" style="margin: 5%" width="90%" />
+            
+            <h:link class="glyphicon glyphicon-home w3-bar-item w3-button" value=" PRINCIPAL" outcome="/index" /><i class = "fa fa-home"></i>
+            <h:link class="glyphicon glyphicon-file w3-bar-item w3-button" value=" Verificar Certificado" outcome="certificado" />
+            <h:link class="w3-bar-item w3-button glyphicon glyphicon-user " value=" Realizar Cadastro" outcome="cadastrarPessoa" />
 
-                <h:link class="glyphicon glyphicon-home w3-bar-item w3-button" value=" PRINCIPAL" outcome="/index" /><i class = "fa fa-home"></i>
-                <h:link class="glyphicon glyphicon-file w3-bar-item w3-button" value=" Verificar Certificado" outcome="certificado" />
-                <h:link class="w3-bar-item w3-button glyphicon glyphicon-user " value=" Realizar Cadastro" outcome="cadastrarPessoa" />
-                
-                <h:form rendered="#{regrasBean.verificaAdministrador()}">
-                    <div class="glyphicon glyphicon-lock w3-bar-item w3-button" onclick="myAccFunc()">
-                        <span>Opções do Administrador</span> 
-                        <i class="fa fa-caret-down"></i>
-                    </div>
-                    <div id="demoAcc" class="w3-hide w3-white">
-                        <h:link class="w3-bar-item w3-button glyphicon glyphicon-calendar" value=" Evento" outcome="eventoCadastro" />                    
-                        <h:link class="w3-bar-item w3-button glyphicon glyphicon-map-marker" value=" Local" outcome="cadastroLocal" />                    
-                        <h:link class="w3-bar-item w3-button glyphicon glyphicon-home" value=" Unidade" outcome="cadastrarUnidade" />                    
-                    </div>
-                </h:form>
-                
-                <h:link class="glyphicon glyphicon-log-in w3-bar-item w3-button" rendered="#{!autenticadorBean.estado()}" value=" Entrar " outcome="login" />
-                <h:commandLink class="glyphicon glyphicon-log-out w3-bar-item w3-button" rendered="#{autenticadorBean.estado()}" value=" Sair " action="#{autenticadorBean.desautentica()}" />                  
-                
-            </h:form>       
-        </div>        
+            <h:form rendered="#{regrasBean.verificaAdministrador()}">
+                <div class="glyphicon glyphicon-lock w3-bar-item w3-button" onclick="myAccFunc()">
+                    <span>Opções do Administrador</span> 
+                    <i class="fa fa-caret-down"></i>
+                </div>
+                <div id="demoAcc" class="w3-hide w3-white">
+                    <h:link class="w3-bar-item w3-button glyphicon glyphicon-calendar" value=" Evento" outcome="eventoCadastro" />                    
+                    <h:link class="w3-bar-item w3-button glyphicon glyphicon-map-marker" value=" Local" outcome="cadastroLocal" />                    
+                    <h:link class="w3-bar-item w3-button glyphicon glyphicon-home" value=" Unidade" outcome="cadastrarUnidade" />                    
+                </div>
+            </h:form>
+
+            <h:link class="glyphicon glyphicon-log-in w3-bar-item w3-button" rendered="#{!autenticadorBean.estado()}" value=" Entrar " outcome="login" />
+            <h:commandLink class="glyphicon glyphicon-log-out w3-bar-item w3-button" rendered="#{autenticadorBean.estado()}" value=" Sair " action="#{autenticadorBean.desautentica()}" />                  
+
+        </h:form>       
+    </div>        
     
 </ui:composition>

@@ -1,9 +1,7 @@
 package edu.org.eventos.model;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,8 +20,9 @@ public class Evento implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String idGerado;
-        
+    
     private String nome;    
+    private String descricao;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dtInicio;
@@ -39,6 +38,18 @@ public class Evento implements Serializable {
     @JoinColumn(name="id_unidade")
     private Unidade unidade;                
     
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_assinante")
+    private Pessoa assinante;
+
+    public Pessoa getAssinante() {
+        return assinante;
+    }
+
+    public void setAssinante(Pessoa assinante) {
+        this.assinante = assinante;
+    }
+        
     public String getIdGerado() {
         return idGerado;
     }
@@ -95,6 +106,14 @@ public class Evento implements Serializable {
         this.id = id;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

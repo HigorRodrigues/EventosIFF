@@ -54,7 +54,7 @@ public class EventoDAO {
         em.close();
         emf.close();
         return evento;
-    }
+    }    
     
     //remove um evento
     public boolean delete( Evento e ){

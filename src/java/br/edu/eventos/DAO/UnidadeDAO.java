@@ -11,21 +11,24 @@ import javax.persistence.Query;
 public class UnidadeDAO {
     
     public boolean Cadastrar( Unidade unidade ){
+        boolean status = false;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaJPAPU");
         EntityManager em = emf.createEntityManager();
         try{        
             em.getTransaction().begin();
             em.persist(unidade);
             em.getTransaction().commit();
+            status = true;
         }
         catch( Exception e ){
-            return false;
+            em.getTransaction().rollback();
+            e.printStackTrace();
         }
         finally{
             em.close();
             emf.close();
         }
-        return true;
+        return status;
     }
     
     public Unidade findById( Long id ){

@@ -6,10 +6,12 @@
 package br.edu.eventos.enuns;
 
 public enum FormaParticipacao {
-    
-    PARTICIPANTE("Participante"),
-    MINISTRANTE("Ministrante"),
-    MODERADOR("Moderador");
+        
+    COORDENADOR("coordenador"),
+    DEBATEDOR("debatedor"),
+    MINISTRANTE("ministrante"),
+    MODERADOR("moderador"),
+    PARTICIPANTE("participante");
     
     private String modoParticipacao;
     

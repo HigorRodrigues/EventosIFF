@@ -1,6 +1,5 @@
 package br.edu.eventos.DAO;
 
-import edu.org.eventos.model.Evento;
 import edu.org.eventos.model.Pessoa;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -10,21 +9,25 @@ import javax.persistence.Query;
 
 public class PessoaDAO {
     
-    public void salvar( Pessoa p ){
+    public boolean salvar( Pessoa p ){
+        boolean status = false;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaJPAPU");
         EntityManager em = emf.createEntityManager();
         try{
             em.getTransaction().begin();            
             em.persist(p);
             em.getTransaction().commit();
+            status = true;
         }
         catch( Exception exception ){
+            em.getTransaction().rollback();
             exception.printStackTrace();
         }
         finally{
             em.close();
             emf.close();
         }
+        return status;
     }
     
     public List<Pessoa> findAll(){
@@ -36,6 +39,27 @@ public class PessoaDAO {
         em.close();
         emf.close();
         return pessoas;
+    }
+    
+    public List<Pessoa> findByPerfil(String perfil){        
+        List<Pessoa> pessoas = null;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaJPAPU");
+        EntityManager em = emf.createEntityManager();        
+                
+        try{
+            em.getTransaction().begin();
+            Query query = em.createQuery("select p from Pessoa p where p.perfil = :perfil");
+            query.setParameter("perfil", perfil);        
+            pessoas = query.getResultList();    
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            em.close();
+            emf.close();
+        }
+        return pessoas;                 
     }
     
     public Pessoa findUser(String email, String senha){
@@ -68,7 +92,7 @@ public class PessoaDAO {
             }
         }
         return pessoa;
-    }
+    }        
     
     public Pessoa findById(Long id){        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaJPAPU");

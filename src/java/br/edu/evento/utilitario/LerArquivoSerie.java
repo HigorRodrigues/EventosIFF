@@ -63,7 +63,7 @@ public class LerArquivoSerie {
     
     public void apagaArquivo( String arquivo ){
         File arq = new File(arquivo);
-        arq.delete();
+        arq.delete();      
     }
     
     private int stringToInt( String serie ){

@@ -62,8 +62,18 @@ public class UnidadeBean implements Serializable{
         unidade.setCidade(cidade);
         
         if( new UnidadeDAO().Cadastrar(unidade) )
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage( FacesMessage.SEVERITY_INFO, "Info", "Unidade cadastrada com sucesso!"));
+            this.adicionaMensagem(FacesMessage.SEVERITY_INFO, "Unidade Cadastrada com sucesso");
+        else
+            this.adicionaMensagem(FacesMessage.SEVERITY_INFO, "Erro ao cadastrar Unidade");
         return "/cadastrarUnidade.xhtml?faces-redirect=true";
+    }
+    
+    private void adicionaMensagem(FacesMessage.Severity type, String mensagem){
+        FacesMessage fm = new FacesMessage(mensagem);
+        fm.setSeverity(type);
+        FacesContext.getCurrentInstance().addMessage(
+            null, fm);		
+	FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);        
     }
     
     public List<String> getCidades() {

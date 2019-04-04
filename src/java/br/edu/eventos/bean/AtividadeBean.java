@@ -9,7 +9,8 @@ import edu.org.eventos.model.Atividade;
 import edu.org.eventos.model.Evento;
 import edu.org.eventos.model.Local;
 import java.io.Serializable;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -23,14 +24,11 @@ public class AtividadeBean implements Serializable{
     private static final long serialVersionUID = 1L;
     
     private Long id, id_evento, id_local;
-    private String nome; 
-    private Date dtInicio;    
-    private Date dtFim;        
-    private Date horaInicio;    
+    private String nome, dtInicio, dtFim, horaInicio;    
     private int carga_horaria;    
     private Evento evento;
     private List<Atividade> atividades;
-    private boolean statusEncerramento;
+    private boolean statusEncerramento;    
     
     private String gerarIdAtividade(Evento e){                
         return e.getIdGerado() + "A" + 
@@ -38,19 +36,23 @@ public class AtividadeBean implements Serializable{
     }
     
     //método para salvar a atividade
-    public String salvar(){                
+    public String salvar() throws ParseException{                
         HttpSession session = new AutenticadorBean().retornaSessao();
         Evento eSession = (Evento) session.getAttribute("evento");
         Evento e = new EventoDAO().findById(eSession.getId());
         Local l = new LocalDAO().findById(id_local);
         
+        SimpleDateFormat parser = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat parserHora = new SimpleDateFormat("HH:mm");
+        
+        
         Atividade atividade = new Atividade();
         atividade.setIdGerado(this.gerarIdAtividade(e));
-        atividade.setNome(nome);
-        atividade.setDtInicio(dtInicio);
-        atividade.setDtFim(dtFim);
+        atividade.setNome(nome);                
+        atividade.setDtInicio(parser.parse(dtInicio));
+        atividade.setDtFim(parser.parse(dtFim));
         atividade.setCarga_horaria(carga_horaria);
-        atividade.setHoraInicio(horaInicio);
+        atividade.setHoraInicio(parserHora.parse(horaInicio));
         atividade.setEvento(e);
         atividade.setLocal(l);
         atividade.setStatusEncerramento(false);
@@ -85,11 +87,11 @@ public class AtividadeBean implements Serializable{
         this.nome = nome;
     }
 
-    public Date getDtInicio() {
+    public String getDtInicio() {
         return dtInicio;
     }
 
-    public void setDtInicio(Date dtInicio) {
+    public void setDtInicio(String dtInicio) {
         this.dtInicio = dtInicio;
     }
 
@@ -109,19 +111,19 @@ public class AtividadeBean implements Serializable{
         this.atividades = atividades;
     }
     
-    public Date getDtFim() {
+    public String getDtFim() {
         return dtFim;
     }
 
-    public void setDtFim(Date dtFim) {
+    public void setDtFim(String dtFim) {
         this.dtFim = dtFim;
     }
 
-    public Date getHoraInicio() {
+    public String getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(Date horaInicio) {
+    public void setHoraInicio(String horaInicio) {
         this.horaInicio = horaInicio;
     }
 

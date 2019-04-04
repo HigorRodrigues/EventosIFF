@@ -7,17 +7,17 @@ package br.edu.eventos.enuns;
 
 public enum TipoAtividade {
 
-    PALESTRA("Palestra"),
-    MINICURSO("Minicurso"),
-    OFICINA("Oficina"),
-    EXPOSICAO("Exposição"),
-    VISITACAO("Visitação"),
-    MESAREDONDA("Mesa Redonda"),
-    WORKSHOP("WorkShop"),
-    DEBATE("Debate"),
-    PROJETO("Projeto"),
-    VISITATECNICA("Visita Técnica"),
-    SESSAOORAL("Sessão Oral");
+    PALESTRA("a palestra"),
+    MINICURSO("o minicurso"),
+    OFICINA("a oficina"),
+    EXPOSICAO("a exposição"),
+    VISITACAO("a visitação"),
+    MESAREDONDA("a mesa redonda"),
+    WORKSHOP("o workShop"),
+    DEBATE("o debate"),
+    PROJETO("o projeto"),
+    VISITATECNICA("a visita técnica"),
+    SESSAOORAL("a sessão oral");
     
     TipoAtividade( String tipo ){
         this.tipo = tipo;

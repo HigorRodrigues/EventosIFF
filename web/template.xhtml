@@ -1,18 +1,31 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui = "http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:ui = "http://java.sun.com/jsf/facelets">
       
     <h:head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>        
+        
         <h:outputStylesheet name="css/bootstrap.min.css"/>
         <h:outputStylesheet name="css/w3.css"/>
         <h:outputScript name="js/mascaras.js"/>        
-        <h:outputScript name="js/Accordion.js"/>        
+        <h:outputScript name="js/Accordion.js"/>  
+        
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js" />
+        <noscript>Seu navegador não suporta JavaScript!</noscript>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" />
+        <noscript>Seu navegador não suporta JavaScript!</noscript>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+        <h:outputScript name="js/datapicker.js"/>
+        <noscript>Seu navegador não suporta JavaScript!</noscript>
+        <h:outputScript name="js/mascaras.js"/>
+        <noscript>Seu navegador não suporta JavaScript!</noscript>
+        <h:outputScript name="js/jquery.mask.min.js"/>
+        <noscript>Seu navegador não suporta JavaScript!</noscript>
+        
         <title>Eventos</title>                        
     </h:head>
     
@@ -23,6 +36,10 @@
         
         <ui:insert name="situacaoUsuario">                
             <ui:include src="templates/situacao.xhtml" />
+        </ui:insert>
+        
+        <ui:insert name="mensagem">                
+            <ui:include src="templates/mensagens.xhtml" />
         </ui:insert>
         
         <ui:insert name="corpo" />
